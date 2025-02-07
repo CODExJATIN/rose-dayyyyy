@@ -266,6 +266,16 @@ function StarryBackground() {
 }
 
 function FloatingPetals() {
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
+  }, []);
+
+  if (!windowWidth || !windowHeight) return null; // Don't render until window sizes are available
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       {[...Array(15)].map((_, i) => (
@@ -273,11 +283,11 @@ function FloatingPetals() {
           key={i}
           initial={{
             x: -100,
-            y: Math.random() * window.innerHeight,
+            y: Math.random() * windowHeight,
             rotate: 0,
           }}
           animate={{
-            x: window.innerWidth + 100,
+            x: windowWidth + 100,
             rotate: 360,
           }}
           transition={{
@@ -291,6 +301,5 @@ function FloatingPetals() {
         </motion.div>
       ))}
     </div>
-  )
+  );
 }
-
